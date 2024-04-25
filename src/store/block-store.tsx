@@ -1,6 +1,7 @@
 import { createStore } from "zustand/vanilla"
 
 import type { ColorfulBlock, SortType } from "@/shared/types/block"
+import { DEFAULT_EXPIRE_TIME } from "@/shared/lib/utils"
 
 type BlockState = {
   blocks: ColorfulBlock[]
@@ -9,9 +10,9 @@ type BlockState = {
 
 type BlockActions = {
   setBlocks: (blocks: ColorfulBlock[]) => void
+  tickBlocks: (time: number) => void
   addNewBlock: (block: ColorfulBlock) => void
-  updateBlock: (newBlock: ColorfulBlock) => void
-  tickBlock: (blocId: string) => void
+  resetBlock: (blockId: string) => void
   deleteBlock: (blockId: string) => void
   sortBlocks: () => void
 }
@@ -23,6 +24,10 @@ export function createBlockStore() {
     blocks: [],
     sort: "none",
     setBlocks: (blocks) => set(() => ({ blocks })),
+    tickBlocks: (time) =>
+      set(({ blocks }) => ({
+        blocks: blocks.map((block) => ({ ...block, time: block.time - time })),
+      })),
     addNewBlock: (block) =>
       set(({ blocks, sort }) => {
         let insertIndex = 0
@@ -43,16 +48,10 @@ export function createBlockStore() {
         }
         return { blocks: blocks.toSpliced(insertIndex, 0, block) }
       }),
-    updateBlock: (newBlock) =>
+    resetBlock: (blockId) =>
       set(({ blocks }) => ({
         blocks: blocks.map((block) =>
-          block.id == newBlock.id ? newBlock : block
-        ),
-      })),
-    tickBlock: (blockId) =>
-      set(({ blocks }) => ({
-        blocks: blocks.map((block) =>
-          block.id == blockId ? { ...block, time: block.time - 1 } : block
+          block.id == blockId ? { ...block, time: DEFAULT_EXPIRE_TIME } : block
         ),
       })),
     deleteBlock: (blockId) =>
