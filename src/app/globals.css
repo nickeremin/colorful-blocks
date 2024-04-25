@@ -1,0 +1,221 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --red-color: 255 69 58;
+    --orange-color: 255 159 10;
+    --yellow-color: 255 214 10;
+    --green-color: 48 209 88;
+    --mint-color: 99 230 226;
+    --cyan-color: 100 210 255;
+    --blue-color: 10 132 255;
+    --purple-color: 191 90 242;
+    --pink-color: 255 55 95;
+
+    --primary: 250 250 255;
+    --secondary: 205 205 210;
+    --tertiary: 150 150 155;
+    --destructive: 255 69 58;
+
+    --accent: 45 45 50;
+    --muted: 30 30 35;
+    --background: 5 5 10;
+    --ds-background-100: 18 18 23;
+
+    --focus-color: 82 168 255;
+
+    --border: 51 51 51;
+    --ring: 82 168 255;
+
+    --radius: 0.5rem;
+
+    --themed-border: hsl(0, 0%, 100%, 0.17);
+    --themed-border-hover: hsl(0, 0%, 100%, 0.2);
+    --themed-border-focus: hsl(0, 0%, 100%, 0.24);
+
+    --focus-ring: 0 0 0 2px rgb(var(--ds-background-100)),
+      0 0 0 4px rgb(var(--focus-color));
+  }
+}
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    @apply bg-background;
+  }
+
+  body {
+    @apply bg-background text-primary;
+  }
+}
+
+@layer components {
+  /* Button */
+  [data-button="true"]:focus-visible {
+    transition: none;
+    box-shadow: var(--focus-ring);
+  }
+
+  /* Input */
+  [data-input="true"]:disabled {
+    color: rgb(var(--muted-foreground));
+    background-color: rgb(var(--muted));
+    cursor: not-allowed;
+  }
+
+  [data-input-wrapper="true"] {
+    transition: all 0.15s ease-in-out;
+    box-shadow: 0 0 0 1px var(--themed-border);
+  }
+
+  [data-input-wrapper="true"][data-input-error="true"] {
+    box-shadow: 0 0 0 1px rgb(var(--red-color) / 0.8);
+  }
+
+  [data-input-wrapper="true"]:hover {
+    box-shadow: 0 0 0 1px rgba(var(--tertiary));
+  }
+
+  [data-input-wrapper="true"]:hover[data-input-error="true"] {
+    box-shadow: 0 0 0 1px rgb(var(--red-color));
+  }
+
+  [data-input-wrapper="true"]:focus-within {
+    box-shadow:
+      0 0 0 1px rgb(var(--tertiary)),
+      0 0 0 4px var(--themed-border-focus);
+  }
+
+  [data-input-wrapper="true"]:focus-within[data-input-error="true"] {
+    box-shadow:
+      0 0 0 1px rgb(var(--red-color)),
+      0 0 0 4px rgb(var(--red-color) / 0.25);
+  }
+
+  [data-input-wrapper="true"]:has([data-shadcnui-input="true"]:disabled) {
+    box-shadow: 0 0 0 1px var(--themed-border);
+  }
+
+  input[type="search"]::-webkit-search-decoration,
+  input[type="search"]::-webkit-search-cancel-button,
+  input[type="search"]::-webkit-search-results-button,
+  input[type="search"]::-webkit-search-results-decoration,
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+}
+
+/* Gradients */
+.animated-gradient-text-fade-blue {
+  animation: fade-text-blue 8s infinite;
+}
+
+.animated-gradient-text-fade-purple {
+  animation: fade-text-purple 8s infinite;
+}
+
+.animated-gradient-text-fade-orange {
+  animation: fade-text-orange 8s infinite;
+}
+
+.animated-gradient-text-fade-blue-reverse {
+  animation: fade-text-blue-reverse 8s infinite;
+}
+
+.animated-gradient-text-fade-purple-reverse {
+  animation: fade-text-purple-reverse 8s infinite;
+}
+
+.animated-gradient-text-fade-orange-reverse {
+  animation: fade-text-orange-reverse 8s infinite;
+}
+
+@keyframes fade-text-blue {
+  0%,
+  16.667%,
+  100% {
+    opacity: 1;
+  }
+
+  33.333%,
+  83.333% {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-text-purple {
+  0%,
+  100% {
+    opacity: 0;
+  }
+
+  33.333%,
+  50% {
+    opacity: 1;
+  }
+
+  16.667%,
+  66.667% {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-text-orange {
+  0%,
+  50%,
+  100% {
+    opacity: 0;
+  }
+
+  66.667%,
+  83.333% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-text-blue-reverse {
+  0%,
+  16.667%,
+  100% {
+    opacity: 0;
+  }
+
+  33.333%,
+  83.333% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-text-purple-reverse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  33.333%,
+  50% {
+    opacity: 0;
+  }
+
+  16.667%,
+  66.667% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-text-orange-reverse {
+  0%,
+  50%,
+  100% {
+    opacity: 1;
+  }
+
+  66.667%,
+  83.333% {
+    opacity: 0;
+  }
+}
