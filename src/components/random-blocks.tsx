@@ -4,7 +4,7 @@ import React from "react"
 import { useBlockStore } from "@/store/block-store-provider"
 import { AnimatePresence } from "framer-motion"
 
-import { createRandomBlock } from "@/shared/lib/utils"
+import { createColorfulBlock } from "@/shared/lib/utils"
 
 import ColorfulBlock from "./colorful-block"
 
@@ -15,7 +15,7 @@ function RandomBlocks() {
   React.useEffect(() => {
     const newBlocks = Array(Math.floor(Math.random() * 12) + 4)
       .fill(0)
-      .map(createRandomBlock)
+      .map(createColorfulBlock)
     setBlocks(newBlocks)
 
     return () => {

@@ -10,7 +10,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function generateRandomHexColor() {
+export function generateHexColor() {
   const red = Math.floor(Math.random() * 256)
   const green = Math.floor(Math.random() * 256)
   const blue = Math.floor(Math.random() * 256)
@@ -22,10 +22,10 @@ export function generateRandomHexColor() {
   return "#" + redHex + greenHex + blueHex
 }
 
-export function createRandomBlock() {
+export function createColorfulBlock() {
   return {
     id: nanoid(),
-    color: generateRandomHexColor(),
+    color: generateHexColor(),
     time: DEFAULT_EXPIRE_TIME,
   } satisfies ColorfulBlock
 }
