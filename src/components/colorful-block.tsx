@@ -39,10 +39,10 @@ function ColorfulBlock({ block }: ColorfulBlockProps) {
         borderRadius: "8px",
       }}
       className="relative flex size-32 cursor-pointer items-center justify-center border border-white/40 bg-origin-border outline-none"
-      onClick={() => resetBlock(block.id)}
+      onClick={() => resetBlock(block)}
       onKeyUp={(e) => {
         if (e.key == "Enter") {
-          resetBlock(block.id)
+          resetBlock(block)
         }
       }}
     >

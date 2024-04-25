@@ -7,7 +7,6 @@ import { PlusIcon } from "@radix-ui/react-icons"
 import { nanoid } from "nanoid"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
-import { z } from "zod"
 
 import { type NewBlockInputs } from "@/shared/types/block"
 import { DEFAULT_EXPIRE_TIME } from "@/shared/lib/utils"

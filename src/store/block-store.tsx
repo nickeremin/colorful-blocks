@@ -13,7 +13,7 @@ type BlockActions = {
   setBlocks: (blocks: ColorfulBlock[]) => void
   tickBlocks: (time: number) => void
   addNewBlock: (block: ColorfulBlock) => void
-  resetBlock: (blockId: string) => void
+  resetBlock: (block: ColorfulBlock) => void
   deleteBlock: (blockId: string) => void
   sortBlocks: () => void
 }
@@ -37,33 +37,52 @@ export function createBlockStore() {
       })),
     addNewBlock: (block) =>
       set(({ blocks, sort }) => {
-        let insertIndex = 0
+        let insertIndex: number
 
         // Find right index to insert element
         if (sort == "ascending") {
-          while (
-            insertIndex < blocks.length &&
-            blocks[insertIndex].time < block.time
-          )
-            insertIndex++
+          insertIndex = blocks.length + 1
         } else if (sort == "descending") {
-          while (
-            insertIndex < blocks.length &&
-            blocks[insertIndex].time > block.time
-          )
-            insertIndex++
+          insertIndex = 0
         } else {
           // If no sort insert in random place
           insertIndex = Math.floor(Math.random() * (blocks.length + 1))
         }
+
         return { blocks: blocks.toSpliced(insertIndex, 0, block) }
       }),
-    resetBlock: (blockId) =>
-      set(({ blocks }) => ({
-        blocks: blocks.map((block) =>
-          block.id == blockId ? { ...block, time: DEFAULT_EXPIRE_TIME } : block
-        ),
-      })),
+    resetBlock: ({ id: blockId, color }) =>
+      set(({ blocks, sort }) => {
+        const resetedBlock: ColorfulBlock = {
+          id: blockId,
+          color,
+          time: DEFAULT_EXPIRE_TIME,
+        }
+
+        if (sort == "ascending") {
+          return {
+            blocks: [
+              ...blocks.filter((block) => block.id != blockId),
+              resetedBlock,
+            ],
+          }
+        } else if (sort == "descending") {
+          return {
+            blocks: [
+              resetedBlock,
+              ...blocks.filter((block) => block.id != blockId),
+            ],
+          }
+        } else {
+          return {
+            blocks: blocks.map((block) =>
+              block.id == blockId
+                ? { ...block, time: DEFAULT_EXPIRE_TIME }
+                : block
+            ),
+          }
+        }
+      }),
     deleteBlock: (blockId) =>
       set(({ blocks }) => ({
         blocks: blocks.filter((block) => block.id != blockId),
