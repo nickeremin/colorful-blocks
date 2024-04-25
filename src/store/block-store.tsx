@@ -38,6 +38,8 @@ export function createBlockStore() {
             blocks[insertIndex].time > block.time
           )
             insertIndex++
+        } else {
+          insertIndex = Math.floor(Math.random() * (blocks.length + 1))
         }
         return { blocks: blocks.toSpliced(insertIndex, 0, block) }
       }),

@@ -33,7 +33,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       >
         <BlockStoreProvider>
           <TooltipProvider delayDuration={300}>{children}</TooltipProvider>
-          <Toaster />
+          <Toaster position="bottom-center" />
         </BlockStoreProvider>
       </body>
     </html>
