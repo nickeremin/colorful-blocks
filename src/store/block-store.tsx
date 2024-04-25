@@ -1,7 +1,7 @@
 import { createStore } from "zustand/vanilla"
 
 import type { ColorfulBlock, SortType } from "@/shared/types/block"
-import { DEFAULT_EXPIRE_TIME } from "@/shared/lib/utils"
+import { createColorfulBlock, DEFAULT_EXPIRE_TIME } from "@/shared/lib/utils"
 
 type BlockState = {
   blocks: ColorfulBlock[]
@@ -9,6 +9,7 @@ type BlockState = {
 }
 
 type BlockActions = {
+  generateRandomBlocks: () => void
   setBlocks: (blocks: ColorfulBlock[]) => void
   tickBlocks: (time: number) => void
   addNewBlock: (block: ColorfulBlock) => void
@@ -23,6 +24,12 @@ export function createBlockStore() {
   return createStore<BlockStore>()((set) => ({
     blocks: [],
     sort: "none",
+    generateRandomBlocks: () =>
+      set(() => ({
+        blocks: Array(Math.floor(Math.random() * 32) + 8)
+          .fill(0)
+          .map(createColorfulBlock),
+      })),
     setBlocks: (blocks) => set(() => ({ blocks })),
     tickBlocks: (time) =>
       set(({ blocks }) => ({
@@ -31,6 +38,8 @@ export function createBlockStore() {
     addNewBlock: (block) =>
       set(({ blocks, sort }) => {
         let insertIndex = 0
+
+        // Find right index to insert element
         if (sort == "ascending") {
           while (
             insertIndex < blocks.length &&
@@ -44,6 +53,7 @@ export function createBlockStore() {
           )
             insertIndex++
         } else {
+          // If no sort insert in random place
           insertIndex = Math.floor(Math.random() * (blocks.length + 1))
         }
         return { blocks: blocks.toSpliced(insertIndex, 0, block) }
@@ -60,6 +70,7 @@ export function createBlockStore() {
       })),
     sortBlocks: () =>
       set(({ blocks, sort }) => {
+        // Sort blocks and change sort mode
         if (sort == "ascending") {
           return {
             sort: "descending",

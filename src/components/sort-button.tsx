@@ -17,13 +17,13 @@ function SortButton() {
         variant="none"
         size="icon"
         className={cn(
-          "size-12 shrink-0 rounded-lg",
+          "size-12 shrink-0 rounded-lg border border-white/30 bg-origin-border",
           sort == "none" && "bg-white",
           sort == "ascending" && "bg-blue",
           sort == "descending" && "bg-red"
         )}
         onClick={sortBlocks}
-      ></Button>
+      />
     </Tooltip>
   )
 }

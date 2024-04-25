@@ -4,24 +4,18 @@ import React from "react"
 import { useBlockStore } from "@/store/block-store-provider"
 import { AnimatePresence } from "framer-motion"
 
-import { createColorfulBlock } from "@/shared/lib/utils"
-
 import ColorfulBlock from "./colorful-block"
+import EmptyBlockList from "./empty-block-list"
 
 function RandomBlocks() {
   const blocks = useBlockStore((state) => state.blocks)
-  const setBlocks = useBlockStore((state) => state.setBlocks)
+  const generateRandomBlocks = useBlockStore(
+    (state) => state.generateRandomBlocks
+  )
   const tickBlocks = useBlockStore((state) => state.tickBlocks)
 
   React.useEffect(() => {
-    const newBlocks = Array(Math.floor(Math.random() * 24) + 8)
-      .fill(0)
-      .map(createColorfulBlock)
-    setBlocks(newBlocks)
-
-    return () => {
-      setBlocks([])
-    }
+    generateRandomBlocks()
   }, [])
 
   React.useEffect(() => {
@@ -33,12 +27,17 @@ function RandomBlocks() {
   }, [])
 
   return (
-    <div className="flex flex-wrap justify-center gap-8 sm:justify-start">
-      <AnimatePresence>
-        {blocks.map((block) => (
-          <ColorfulBlock key={block.id} block={block} />
-        ))}
-      </AnimatePresence>
+    <div className="relative">
+      <div className="absolute inset-x-0 top-0 flex justify-center sm:mt-10">
+        <EmptyBlockList />
+      </div>
+      <div className="flex flex-wrap justify-center gap-8 sm:justify-start">
+        <AnimatePresence>
+          {blocks.map((block) => (
+            <ColorfulBlock key={block.id} block={block} />
+          ))}
+        </AnimatePresence>
+      </div>
     </div>
   )
 }
