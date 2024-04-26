@@ -1,3 +1,4 @@
+import React from "react"
 import clsx, { type ClassValue } from "clsx"
 import { nanoid } from "nanoid"
 import { twMerge } from "tailwind-merge"
@@ -28,4 +29,30 @@ export function createColorfulBlock() {
     color: generateHexColor(),
     time: DEFAULT_EXPIRE_TIME,
   } satisfies ColorfulBlock
+}
+
+interface MousePosition {
+  x: number
+  y: number
+}
+
+export function useMousePosition(): MousePosition {
+  const [mousePosition, setMousePosition] = React.useState<MousePosition>({
+    x: 0,
+    y: 0,
+  })
+
+  React.useEffect(() => {
+    const handleMouseMove = (event: MouseEvent) => {
+      setMousePosition({ x: event.clientX, y: event.clientY })
+    }
+
+    window.addEventListener("mousemove", handleMouseMove)
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove)
+    }
+  }, [])
+
+  return mousePosition
 }
