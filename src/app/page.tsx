@@ -22,7 +22,7 @@ export default function HomePage() {
         </div>
         <RandomBlocks />
       </main>
-      <footer className="mx-auto flex h-20 w-full max-w-screen-xl items-center px-6">
+      <footer className="relative mx-auto flex h-20 w-full max-w-screen-xl items-center px-6">
         <span className="select-none font-medium text-tertiary">
           Built by{" "}
           <Link
